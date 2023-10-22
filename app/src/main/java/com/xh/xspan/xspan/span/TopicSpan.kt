@@ -3,10 +3,11 @@ package com.xh.xspan.xspan.span
 import android.graphics.Color
 import android.text.style.ForegroundColorSpan
 import com.xh.xspan.UnBreakableTextSpan
+import com.xh.xspan.xspan.data.Topic
 
-class TopicSpan(val topicName: String, val topicId: Int = 0) : UnBreakableTextSpan() {
+class TopicSpan(val topic: Topic) : UnBreakableTextSpan() {
 
-    override val displayText = "#$topicName "
+    override val displayText = "#${topic.name} "
 
-    override val displaySpan = ForegroundColorSpan(Color.BLUE)
+    override val displaySpan = ForegroundColorSpan(Color.RED)
 }

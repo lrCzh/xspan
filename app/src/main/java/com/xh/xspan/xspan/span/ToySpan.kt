@@ -3,11 +3,10 @@ package com.xh.xspan.xspan.span
 import android.graphics.Color
 import android.text.style.ForegroundColorSpan
 import com.xh.xspan.BreakableTextSpan
-import com.xh.xspan.UnBreakableTextSpan
 
-class ToySpan : UnBreakableTextSpan() {
+class ToySpan(val toy: String) : BreakableTextSpan() {
 
-    override val displayText = "@ToySpan "
+    override val displayText = "&$toy "
 
-    override val displaySpan = ForegroundColorSpan(Color.RED)
+    override val displaySpan = ForegroundColorSpan(Color.GREEN)
 }

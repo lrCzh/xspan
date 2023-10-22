@@ -5,6 +5,7 @@ import android.text.SpannableString
 
 /**
  * 具有整体性的TextSpan
+ * 只能被整个删除
  */
 abstract class UnBreakableTextSpan : TextSpan() {
 

@@ -38,7 +38,9 @@ class XSpanWatcher : SpanWatcher {
             }
         }
         if (what is BreakableTextSpan) {
-            what.checkAndRemoveIfNeed(text!!)
+            text?.let {
+                what.checkAndRemoveIfNeed(it)
+            }
         }
     }
 }

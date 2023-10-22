@@ -13,14 +13,79 @@
         android:gravity="start|top"
         android:hint="请输入"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:specialCharSet="#@" />
 
-    <ImageView
-        android:id="@+id/iv_topic"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="8dp"
-        android:src="@drawable/ic_topic"
+    <TextView
+        android:id="@+id/tv_topic"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="2dp"
+        android:background="#f5f5f5"
+        android:gravity="center"
+        android:text="#"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/et" />
+
+    <TextView
+        android:id="@+id/tv_at"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="2dp"
+        android:background="#f5f5f5"
+        android:gravity="center"
+        android:text="@"
+        app:layout_constraintStart_toEndOf="@id/tv_topic"
+        app:layout_constraintTop_toTopOf="@id/tv_topic" />
+
+    <TextView
+        android:id="@+id/tv_toy"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="2dp"
+        android:background="#f5f5f5"
+        android:gravity="center"
+        android:text="toy"
+        app:layout_constraintStart_toEndOf="@id/tv_at"
+        app:layout_constraintTop_toTopOf="@id/tv_topic" />
+
+    <TextView
+        android:id="@+id/tv_get_all_topic"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="2dp"
+        android:background="#f5f5f5"
+        android:gravity="center"
+        android:paddingHorizontal="4dp"
+        android:text="获取所有#标签"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_topic" />
+
+    <TextView
+        android:id="@+id/tv_get_all_at"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_marginStart="2dp"
+        android:background="#f5f5f5"
+        android:gravity="center"
+        android:paddingHorizontal="4dp"
+        android:text="获取所有@标签"
+        android:textSize="12sp"
+        app:layout_constraintStart_toEndOf="@id/tv_get_all_topic"
+        app:layout_constraintTop_toTopOf="@id/tv_get_all_topic" />
+
+    <TextView
+        android:id="@+id/tv_get_all_toy"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_marginStart="2dp"
+        android:background="#f5f5f5"
+        android:gravity="center"
+        android:paddingHorizontal="4dp"
+        android:text="获取所有&amp;标签"
+        android:textSize="12sp"
+        app:layout_constraintStart_toEndOf="@id/tv_get_all_at"
+        app:layout_constraintTop_toTopOf="@id/tv_get_all_topic" />
 </androidx.constraintlayout.widget.ConstraintLayout>

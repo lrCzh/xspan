@@ -1,6 +1,6 @@
 package com.xh.xspan.xspan
 
-object Constants {
-
-    const val TAG_JUMP_TOPIC = "#"
+object SpecialChar {
+    const val CHAR_TOPIC = '#'
+    const val CHAR_AT = '@'
 }

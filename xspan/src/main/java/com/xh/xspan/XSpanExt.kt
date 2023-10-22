@@ -1,11 +1,9 @@
 package com.xh.xspan
 
-import android.text.SpannableString
+import kotlin.math.max
 
-fun XSpanEditText.insertSpannableString(ss: SpannableString) {
-    if (selectionStart < 0) {
-        text?.insert(0, ss)
-    } else {
-        text?.insert(selectionStart, ss)
-    }
+fun XSpanEditText.insertTextSpan(textSpan: TextSpan) {
+    val selStart = max(0, selectionStart)
+    val dss = textSpan.getDisplaySpannableString()
+    text?.insert(selStart, dss)
 }

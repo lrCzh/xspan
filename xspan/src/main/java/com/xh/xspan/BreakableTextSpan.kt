@@ -5,6 +5,7 @@ import android.text.SpannableString
 
 /**
  * 不具有整体性的TextSpan
+ * 可以被逐步删除，不完整时将丢失样式变回普通文本
  */
 abstract class BreakableTextSpan : TextSpan() {
 
@@ -12,11 +13,12 @@ abstract class BreakableTextSpan : TextSpan() {
         val ss = SpannableString(displayText)
         //设置样式
         ss.setSpan(displaySpan, 0, ss.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        //设置Breakable标识
         ss.setSpan(this, 0, ss.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
         return ss
     }
 
-    fun checkAndRemoveIfNeed(text: Spannable) {
+    internal fun checkAndRemoveIfNeed(text: Spannable) {
         val spanStart = text.getSpanStart(this)
         val spanEnd = text.getSpanEnd(this)
 
