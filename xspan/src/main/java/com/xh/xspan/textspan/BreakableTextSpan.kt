@@ -1,4 +1,4 @@
-package com.xh.xspan
+package com.xh.xspan.textspan
 
 import android.text.Spannable
 import android.text.SpannableString

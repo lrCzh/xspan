@@ -8,6 +8,9 @@ import android.view.KeyEvent
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputConnection
 import androidx.appcompat.widget.AppCompatEditText
+import com.xh.xspan.textspan.TextSpan
+import com.xh.xspan.textspan.UnBreakableTextSpan
+import kotlin.math.max
 
 class XSpanEditText : AppCompatEditText {
 
@@ -91,5 +94,11 @@ class XSpanEditText : AppCompatEditText {
 
     fun setOnSpecialCharInputAction(action: (Char) -> Unit) {
         this.onSpecialCharInputAction = action
+    }
+
+    fun insertTextSpan(textSpan: TextSpan) {
+        val selStart = max(0, selectionStart)
+        val dss = textSpan.getDisplaySpannableString()
+        text?.insert(selStart, dss)
     }
 }

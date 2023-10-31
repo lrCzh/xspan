@@ -4,6 +4,10 @@ plugins {
     id 'kotlin-parcelize'
 }
 
+def keyAliasExt = "lrCzh"
+def keyPasswordExt = "123456"
+def storePasswordExt = "123456"
+
 android {
     namespace 'com.xh.xspan'
     compileSdk 33
@@ -17,10 +21,31 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
-
+    signingConfigs {
+        releaseConfig {
+            storeFile file(rootDir.absolutePath + File.separator + "key.jks")
+            keyAlias keyAliasExt.toString()
+            storePassword storePasswordExt.toString()
+            keyPassword keyPasswordExt.toString()
+            v1SigningEnabled true
+            v2SigningEnabled true
+        }
+    }
     buildTypes {
-        release {
+        debug {
             minifyEnabled false
+            shrinkResources false
+            zipAlignEnabled false
+            debuggable true
+            jniDebuggable true
+        }
+        release {
+            signingConfig signingConfigs.releaseConfig
+            minifyEnabled true
+            shrinkResources true
+            zipAlignEnabled true
+            debuggable false
+            jniDebuggable false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }

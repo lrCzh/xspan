@@ -3,6 +3,8 @@ package com.xh.xspan
 import android.text.Selection
 import android.text.SpanWatcher
 import android.text.Spannable
+import com.xh.xspan.textspan.BreakableTextSpan
+import com.xh.xspan.textspan.UnBreakableTextSpan
 import kotlin.math.abs
 
 /**

@@ -2,7 +2,7 @@ package com.xh.xspan.xspan.span
 
 import android.graphics.Color
 import android.text.style.ForegroundColorSpan
-import com.xh.xspan.BreakableTextSpan
+import com.xh.xspan.textspan.BreakableTextSpan
 
 class ToySpan(val toy: String) : BreakableTextSpan() {
 
