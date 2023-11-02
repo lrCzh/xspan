@@ -109,6 +109,14 @@ class XSpanEditText : AppCompatEditText {
     }
 
     /**
+     * 根据传入的类类型获取对应的 Span 列表
+     */
+    fun <T : TextSpan> getSpans(clazz: Class<T>): List<T> {
+        val editable = text ?: return emptyList()
+        return editable.getSpans(0, editable.length, clazz).toList()
+    }
+
+    /**
      * 重写 onSaveInstanceState 来保存 TextSpan 的相关信息
      */
     override fun onSaveInstanceState(): Parcelable? {

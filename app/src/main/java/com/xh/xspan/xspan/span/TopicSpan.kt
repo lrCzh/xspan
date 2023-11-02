@@ -2,13 +2,12 @@ package com.xh.xspan.xspan.span
 
 import android.graphics.Color
 import android.text.style.ForegroundColorSpan
-import com.xh.xspan.textspan.IntegratedSpan
 import com.xh.xspan.textspan.TextSpan
 import com.xh.xspan.xspan.data.Topic
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-class TopicSpan(val topic: Topic) : TextSpan(), IntegratedSpan {
+class TopicSpan(val topic: Topic) : TextSpan() {
 
     /**
      * 要展示的文本内容
