@@ -20,10 +20,6 @@ internal class XSpanSavedState : BaseSavedState {
         parcel.writeList(spanInfoList)
     }
 
-    override fun describeContents(): Int {
-        return 0
-    }
-
     companion object CREATOR : Parcelable.Creator<XSpanSavedState> {
         override fun createFromParcel(parcel: Parcel): XSpanSavedState {
             return XSpanSavedState(parcel)
