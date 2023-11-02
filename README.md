@@ -1,6 +1,6 @@
-# 一个支持#话题、@用户的 EditText
+# 一个支持`#话题`、`@用户`的 EditText
 
-**_应用场景：类似于微博发布页#话题、@用户_**
+**_应用场景：类似于微博发布页`#话题`、`@用户`_**
 
 ## 使用
 
@@ -10,10 +10,10 @@
 
 ```
 allprojects {
-	repositories {
-	    ...
-		maven { url 'https://jitpack.io' }
-	}
+    repositories {
+        ...
+        maven { url 'https://jitpack.io' }
+    }
 }
 
 dependencies {
@@ -60,7 +60,7 @@ data class Topic(val id: Int, val name: String) : Parcelable
 data class User(val id: Int, val name: String) : Parcelable
 ```
 
-TopicSpan（#话题），继承自TextSpan
+`TopicSpan`（#话题），继承自`TextSpan`
 
 ```
 @Parcelize
@@ -79,7 +79,7 @@ class TopicSpan(val topic: Topic) : TextSpan() {
 }
 ```
 
-AtSpan（@用户），继承自TextSpan，这里实现了IntegratedSpan接口，表示这个Span具有一体性，删除时会整个被删除
+`AtSpan`（@用户），继承自`TextSpan`，这里实现了`IntegratedSpan`接口，表示这个`Span`具有一体性，删除时会整个被删除
 
 ```
 @Parcelize
@@ -116,11 +116,10 @@ et.getSpans(AtSpan::class.java)
 
 ### 5、特殊字符拦截
 
-在XML里面给 XSpanEditText 追加两个属性：
+在XML里面给`XSpanEditText`追加两个属性：
 
-specialCharSet：需要触发回调的特殊字符。  
-interceptSpecialChar：是否拦截该特殊字符的输入。（为 true 时，仅触发回调，但字符不会被输入；为
-false时，触发回调并且能被正常输入）
+`specialCharSet`需要触发回调的特殊字符。  
+`interceptSpecialChar`是否拦截该特殊字符的输入。（为 true 时，仅触发回调，但字符不会被输入；为 false 时，触发回调并且能被正常输入）
 
 ```
 <com.xh.xspan.XSpanEditText
@@ -135,7 +134,7 @@ false时，触发回调并且能被正常输入）
     app:interceptSpecialChar="false"/>
 ```
 
-然后在 Activity 给 XSpanEditText 设置回调监听
+然后在 Activity 给`XSpanEditText`设置回调监听
 
 ```
 et.setOnSpecialCharInputAction { specialChar ->
