@@ -1,6 +1,7 @@
 package com.xh.xspan
 
 import android.content.Context
+import android.os.Parcelable
 import android.text.NoCopySpan
 import android.text.Selection
 import android.util.AttributeSet
@@ -8,8 +9,10 @@ import android.view.KeyEvent
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputConnection
 import androidx.appcompat.widget.AppCompatEditText
+import com.xh.xspan.savedstate.TextSpanInfo
+import com.xh.xspan.savedstate.XSpanSavedState
+import com.xh.xspan.textspan.IntegratedSpan
 import com.xh.xspan.textspan.TextSpan
-import com.xh.xspan.textspan.UnBreakableTextSpan
 import kotlin.math.max
 
 class XSpanEditText : AppCompatEditText {
@@ -80,9 +83,9 @@ class XSpanEditText : AppCompatEditText {
             if (selectionStart != selectionEnd) {
                 return false
             }
-            val unBreakableTextSpans =
-                editable.getSpans(selectionStart, selectionEnd, UnBreakableTextSpan::class.java)
-            unBreakableTextSpans?.find { editable.getSpanEnd(it) == selectionStart }?.let {
+            val integratedSpans =
+                editable.getSpans(selectionStart, selectionEnd, IntegratedSpan::class.java)
+            integratedSpans?.find { editable.getSpanEnd(it) == selectionStart }?.let {
                 val spanStart = editable.getSpanStart(it)
                 val spanEnd = editable.getSpanEnd(it)
                 editable.replace(spanStart, spanEnd, "")
@@ -96,9 +99,65 @@ class XSpanEditText : AppCompatEditText {
         this.onSpecialCharInputAction = action
     }
 
+    /**
+     * 插入 TextSpan 到光标位置
+     */
     fun insertTextSpan(textSpan: TextSpan) {
         val selStart = max(0, selectionStart)
         val dss = textSpan.getDisplaySpannableString()
         text?.insert(selStart, dss)
+    }
+
+    /**
+     * 重写 onSaveInstanceState 来保存 TextSpan 的相关信息
+     */
+    override fun onSaveInstanceState(): Parcelable? {
+        val editable = text ?: return super.onSaveInstanceState()
+
+        val textSpanArray = editable.getSpans(0, editable.length, TextSpan::class.java)
+        val spanInfoList = textSpanArray.map { textSpan ->
+            TextSpanInfo(
+                textSpan,
+                editable.getSpanStart(textSpan),
+                editable.getSpanEnd(textSpan),
+                editable.getSpanFlags(textSpan)
+            )
+        }.toMutableList()
+
+        //  在 onSaveInstanceState 之前先移除掉 text 上与 TextSpan 相关的 Span，免得在 onSaveInstanceState 时经过系统一系列处理，某些效果被保存下来，
+        //  并在 onRestoreInstanceState 时恢复，这个时候如果再叠加上我们自主恢复的 TextSpan，将会导致效果混乱
+        textSpanArray.forEach { span ->
+            editable.removeSpan(span.displaySpan)
+            editable.removeSpan(span)
+        }
+
+        val superState = super.onSaveInstanceState()
+        val savedState = XSpanSavedState(superState)
+        savedState.spanInfoList = spanInfoList
+        return savedState
+    }
+
+    /**
+     * 重写 onRestoreInstanceState 来恢复 TextSpan 的相关信息
+     */
+    override fun onRestoreInstanceState(state: Parcelable?) {
+        when (state) {
+            is XSpanSavedState -> {
+                super.onRestoreInstanceState(state.superState)
+                val editable = text ?: return
+                val spanInfoList = state.spanInfoList
+
+                // 根据[TextSpan.getDisplaySpannableString]我们可以知道，
+                // TextSpan 成员变量 displaySpan 的 spanStart、spanEnd、spanFlags 与 TextSpan 是一致的
+                spanInfoList.forEach {
+                    editable.setSpan(it.span.displaySpan, it.spanStart, it.spanEnd, it.spanFlags)
+                    editable.setSpan(it.span, it.spanStart, it.spanEnd, it.spanFlags)
+                }
+            }
+
+            else -> {
+                super.onRestoreInstanceState(state)
+            }
+        }
     }
 }

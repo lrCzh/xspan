@@ -3,14 +3,14 @@ package com.xh.xspan
 import android.text.Selection
 import android.text.SpanWatcher
 import android.text.Spannable
-import com.xh.xspan.textspan.BreakableTextSpan
-import com.xh.xspan.textspan.UnBreakableTextSpan
+import com.xh.xspan.textspan.IntegratedSpan
+import com.xh.xspan.textspan.TextSpan
 import kotlin.math.abs
 
 /**
  * Span变化监听
- * 1、监听光标的变化并调整光标的位置，不让光标落在 UnBreakableTextSpan 内部
- * 2、BreakableTextSpan 完整性监听，不完整时移除样式效果
+ * 1、监听光标的变化并调整光标的位置，不让光标落在 IntegratedSpan 内部
+ * 2、完整性监听，未标记为 IntegratedSpan 的 TextSpan 将在不完整时移除样式效果
  */
 class XSpanWatcher : SpanWatcher {
 
@@ -22,7 +22,7 @@ class XSpanWatcher : SpanWatcher {
         text: Spannable?, what: Any?, ostart: Int, oend: Int, nstart: Int, nend: Int
     ) {
         if (what === Selection.SELECTION_START && ostart != nstart) {
-            text?.getSpans(nstart, nend, UnBreakableTextSpan::class.java)?.firstOrNull()?.also {
+            text?.getSpans(nstart, nend, IntegratedSpan::class.java)?.firstOrNull()?.also {
                 val spanStart = text.getSpanStart(it)
                 val spanEnd = text.getSpanEnd(it)
                 val index =
@@ -31,7 +31,7 @@ class XSpanWatcher : SpanWatcher {
             }
         }
         if (what === Selection.SELECTION_END && ostart != nstart) {
-            text?.getSpans(nstart, nend, UnBreakableTextSpan::class.java)?.firstOrNull()?.also {
+            text?.getSpans(nstart, nend, IntegratedSpan::class.java)?.firstOrNull()?.also {
                 val spanStart = text.getSpanStart(it)
                 val spanEnd = text.getSpanEnd(it)
                 val index =
@@ -39,10 +39,10 @@ class XSpanWatcher : SpanWatcher {
                 Selection.setSelection(text, Selection.getSelectionStart(text), index)
             }
         }
-        if (what is BreakableTextSpan) {
-            text?.let {
-                what.checkAndRemoveIfNeed(it)
-            }
+
+        val s = text ?: return
+        if (what is TextSpan && what !is IntegratedSpan) {
+            what.checkIntegratedAndRemoveSpanIfNeed(s)
         }
     }
 }

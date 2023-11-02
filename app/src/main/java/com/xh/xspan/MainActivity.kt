@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity() {
                 binding.et.insertTextSpan(AtSpan(User(0, "用户${generateNum()}")))
             }
             tvToy.setOnClickListener {
-                binding.et.insertTextSpan(ToySpan("Toy${generateNum()}"))
+                binding.et.insertTextSpan(ToySpan())
             }
             tvGetAllTopic.setOnClickListener {
                 val editable = binding.et.text ?: return@setOnClickListener
