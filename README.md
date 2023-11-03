@@ -1,6 +1,10 @@
 # 一个支持`#话题`、`@用户`的 EditText
 
-**_应用场景：类似于微博发布页`#话题`、`@用户`_**
+应用场景：类似于微博发布页`#话题`、`@用户`  
+
+效果演示：
+
+<img src="https://i.imgur.com/60ZsbU7.gif" width="40%" />
 
 ## 使用
 
@@ -152,4 +156,8 @@ et.setOnSpecialCharInputAction { specialChar ->
 }
 ```
 
-## 完。
+## 致谢
+<a href="https://juejin.cn/post/7000325389776060447">真·富文本编辑器的演进之路-Span的整体性控制</a>  
+<a href="https://juejin.cn/post/7039637143173955615">真·富文本编辑器的演进之路-富文本Span的边界探究</a>  
+<a href="https://juejin.cn/post/7095535378953666573">真·富文本编辑器的演进之路-Span开胃菜</a>  
+<a href="https://github.com/sunhapper/SpEditTool">SpEditTool</a>
