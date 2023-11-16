@@ -132,13 +132,6 @@ class XSpanEditText : AppCompatEditText {
             )
         }.toMutableList()
 
-        //  在 onSaveInstanceState 之前先移除掉 text 上与 TextSpan 相关的 Span，免得在 onSaveInstanceState 时经过系统一系列处理，某些效果被保存下来，
-        //  并在 onRestoreInstanceState 时恢复，这个时候如果再叠加上我们自主恢复的 TextSpan，将会导致效果混乱
-        textSpanArray.forEach { span ->
-            editable.removeSpan(span.displaySpan)
-            editable.removeSpan(span)
-        }
-
         val superState = super.onSaveInstanceState()
         val savedState = XSpanSavedState(superState)
         savedState.spanInfoList = spanInfoList
@@ -155,11 +148,22 @@ class XSpanEditText : AppCompatEditText {
                 val editable = text ?: return
                 val spanInfoList = state.spanInfoList
 
-                // 根据[TextSpan.getDisplaySpannableString]我们可以知道，
-                // TextSpan 成员变量 displaySpan 的 spanStart、spanEnd、spanFlags 与 TextSpan 是一致的
-                spanInfoList.forEach {
-                    editable.setSpan(it.span.displaySpan, it.spanStart, it.spanEnd, it.spanFlags)
-                    editable.setSpan(it.span, it.spanStart, it.spanEnd, it.spanFlags)
+                spanInfoList.forEach { info ->
+
+                    val existingSpans = editable.getSpans(info.spanStart, info.spanEnd, Any::class.java)
+                    existingSpans.forEach { span ->
+                        if (editable.getSpanStart(span) == info.spanStart &&
+                            editable.getSpanEnd(span) == info.spanEnd &&
+                            editable.getSpanFlags(span) == info.spanFlags
+                        ) {
+                            editable.removeSpan(span)
+                        }
+                    }
+
+                    // 根据[TextSpan.getDisplaySpannableString]我们可以知道，
+                    // TextSpan 成员变量 displaySpan 的 spanStart、spanEnd、spanFlags 与 TextSpan 是一致的
+                    editable.setSpan(info.span.displaySpan, info.spanStart, info.spanEnd, info.spanFlags)
+                    editable.setSpan(info.span, info.spanStart, info.spanEnd, info.spanFlags)
                 }
             }
 
