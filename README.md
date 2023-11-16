@@ -4,7 +4,7 @@
 
 效果演示：
 
-<p align="left"><img src="https://i.imgur.com/tJrzQFb.gif" alt="image-20200802050745439" width="40%" /></p>
+<p align="left"><img src="https://i.imgur.com/tJrzQFb.gif" alt="XSpan" width="40%" /></p>
 
 ## 使用
 
