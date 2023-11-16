@@ -4,11 +4,11 @@
 
 效果演示：
 
-<p align="left"><img src="https://i.imgur.com/tJrzQFb.gif" alt="XSpan" width="40%" /></p>
+<p align="left"><img src="https://i.imgur.com/tJrzQFb.gif" alt="xspan" width="40%" /></p>
 
 ## 使用
 
-[![](https://jitpack.io/v/lrCzh/Xspan.svg)](https://jitpack.io/#lrCzh/Xspan)
+[![](https://jitpack.io/v/lrCzh/xspan.svg)](https://jitpack.io/#lrCzh/xspan)
 
 ### 1、引入
 
@@ -21,7 +21,7 @@ allprojects {
 }
 
 dependencies {
-    implementation 'com.github.lrCzh:Xspan:latestVersion'
+    implementation 'com.github.lrCzh:xspan:latestVersion'
 }
 ```
 
